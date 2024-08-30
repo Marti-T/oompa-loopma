@@ -1,0 +1,33 @@
+/* custom loader */
+
+.loader {
+    display: flex;
+    justify-content: center;
+
+    &__spinner {
+        width: 40px;
+        height: 40px;
+        display: grid;
+        animation: s4 4s infinite;
+
+        &:after,
+        &:before {
+            content:"";
+            grid-area: 1/1;
+            border: 6px solid;
+            border-radius: 50%;
+            border-color:#4A249D #4A249D #0000 #0000;
+            mix-blend-mode: darken;
+            animation: s4 1s infinite linear;
+        }
+
+        &:after {
+            border-color:#0000 #0000 #E4E4ED #E4E4ED;
+            animation-direction: reverse;
+        }
+    }  
+}
+
+@keyframes s4{ 
+    100%{transform: rotate(1turn)}
+}

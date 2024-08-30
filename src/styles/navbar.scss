@@ -1,0 +1,28 @@
+/* Navbar */
+
+.navbar {
+  background-color: $bg-navbar;
+  border-radius: 2px;
+  margin-bottom: 25px;
+  padding: 15px 20px;
+
+  &__content {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+  }
+
+  &__logo {
+    margin-right: 25px;
+    height: auto;
+    width: 40px;
+  }
+
+  &__title {
+    color: $color-primary-brand;
+    font-size: 18px;
+    font-weight: 700;
+    margin: 0;
+  }
+
+}
