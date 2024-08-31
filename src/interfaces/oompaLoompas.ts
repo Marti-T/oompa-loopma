@@ -55,6 +55,6 @@ export enum Food {
 }
 
 export enum Gender {
-    F = "Women",
-    M = "Men",
+    F = "F",
+    M = "M",
 }

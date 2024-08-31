@@ -33,11 +33,23 @@
         justify-self: center;
     }
 
+    &__image-content {
+        width: 100%;
+        height: 205px;
+        overflow: hidden;
+    }
+
     &__image {
         display: block;
         height: 205px;
         width: 100%;
         object-fit: cover;
+        transition: transform .3s ease;
+        overflow: hidden;
+
+        &:hover {
+            transform: scale(1.3);
+        }
     }
 
     &__info {

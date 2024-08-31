@@ -4,7 +4,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
 import { getOompaloompasDetail } from "../../store/slices/oompaloopas";
 import { AppDispatch, RootState } from '../../store/index';
-import { Detail } from '../../interfaces/oompaLoompas';
+import { Detail, Gender } from '../../interfaces/oompaLoompas';
 
 export const DetailPage = () => {
 
@@ -60,7 +60,7 @@ export const DetailPage = () => {
                             <div>
                                 <div className="oompa-loompa-detail__info">
                                     <h1 className="oompa-loompa-detail__title">{ detail.first_name } { detail.last_name }</h1>
-                                    <p className="oompa-loompa-detail__gender">{ detail.gender }</p>
+                                    <p className="oompa-loompa-detail__gender">{ detail.gender === Gender.F ? 'Women' : 'Men' }</p>
                                     <p className="oompa-loompa-detail__profession">{ detail.profession }</p>
                                 </div>
                                 <div 
