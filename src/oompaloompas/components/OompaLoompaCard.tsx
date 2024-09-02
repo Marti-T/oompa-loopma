@@ -13,8 +13,8 @@ export const OompaLoompaCard = ({ id, image, first_name, last_name, gender, prof
                     </div>
                 </Link>
                 <div className="oompa-loompa-card__info">
-                    <Link to={`/detail/${ id }`} className="oompa-loompa-card__link">
-                        <h2 className="oompa-loompa-card__name">{ id } - { first_name } { last_name }</h2>
+                    <Link to={`/detail/${ id }`} className="oompa-loompa-card__link" aria-label="link-card">
+                        <h2 className="oompa-loompa-card__name">{ first_name } { last_name }</h2>
                     </Link>
                     <p className="oompa-loompa-card__gender">{ gender === Gender.F ? 'Women' : 'Men' }</p>
                     <p className="oompa-loompa-card__profession">{ profession }</p>

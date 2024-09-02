@@ -7,14 +7,14 @@ export interface Welcome {
 export interface Result {
     first_name: string;
     last_name:  string;
-    favorite:   Favorite;
+    favorite?:   Favorite;
     gender:     Gender;
     image:      string;
     profession: string;
-    email:      string;
-    age:        number;
-    country:    Country;
-    height:     number;
+    email?:      string;
+    age?:        number;
+    country?:    Country;
+    height?:     number;
     id:         number;
 }
 

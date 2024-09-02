@@ -1,8 +1,19 @@
 # React + TypeScript + Vite
 
-## Node version
-v20.16.0
+## Node Version
+v20.10.0
 
-## Install
+## Init
+```bash
+nvm use 20.10.0
 yarn install
+```
+
+## Dependencies
+```bash
 yarn dev
+```
+
+# Testing
+```bash
+yarn test
