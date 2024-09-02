@@ -4,7 +4,6 @@ import { AppDispatch, RootState } from '../../store/index';
 import { getOompaloompasList } from "../../store/slices/oompaloopas";
 import { checkDateExpired } from '../../helpers/checkDateExpired';
 import { OompaLoompaCard, Search } from '../components';
-import { Result } from '../../interfaces/oompaLoompas';
 
 
 export const HomePage = () => {
@@ -13,8 +12,7 @@ export const HomePage = () => {
     const { isLoading, oompaloompas, page, total, error } = useSelector((state: RootState) => state.oompaloompas); 
     const [hasMoreData, setHasMoreData] = useState(true);
 
-    
-    // TODO: Mirar dependencias 
+
     useEffect(() => {
         const storedOompaLoompas = JSON.parse(localStorage.getItem('oompaLoompasList') || '[]');
         const storedPage = JSON.parse(localStorage.getItem('oompaLoompasPage') || '0');
@@ -40,14 +38,7 @@ export const HomePage = () => {
 
     useEffect(() => {
         if (oompaloompas.length > 0) {
-            // TODO: Optimizar 
-            const existingOompaLoompas = JSON.parse(localStorage.getItem('oompaLoompasList') || '[]');
-            const updatedOompaLoompas = [
-                ...existingOompaLoompas,
-                ...oompaloompas.filter(oompa => !existingOompaLoompas.some((existing: Result) => existing.id === oompa.id))
-            ];
-
-            localStorage.setItem('oompaLoompasList', JSON.stringify(updatedOompaLoompas));
+            localStorage.setItem('oompaLoompasList', JSON.stringify(oompaloompas));
             localStorage.setItem('oompaLoompasPage', JSON.stringify(page));
             localStorage.setItem('oompaLoompasTotalPages', JSON.stringify(total));
         }
@@ -58,15 +49,14 @@ export const HomePage = () => {
         if (page >= total) {
             setHasMoreData(false);
         } else {
-            dispatch(getOompaloompasList(page));
+            dispatch(getOompaloompasList(page + 1));
         }
     }, [dispatch, page, total]);
-    
+
 
     useEffect(() => {
         if(page <= total) {
             const handleScroll = () => {
-
                 if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight && !isLoading) {
                     handleMoreOompaLoompas();
                 }
