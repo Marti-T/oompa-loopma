@@ -1,5 +1,6 @@
 import { createSlice } from '@reduxjs/toolkit';
 import { Result, Detail } from '../../../interfaces/oompaLoompas';
+import { filterDuplicates } from '../../../helpers/filterDuplicates';
 
 
 interface OompaLoompasState {
@@ -33,14 +34,7 @@ export const oompaLoompasSlice = createSlice({
             state.isLoading = false;
             state.page = action.payload.page;
 
-            // TODO: Optimizar
-            const newOompas = action.payload.oompaloompas.filter((newOompa: Result) => {
-                return !state.oompaloompas.some(existingOompa => existingOompa.id === newOompa.id);
-            });
-
-            const updatedOompas = [...state.oompaloompas, ...newOompas];
-            
-            state.oompaloompas = updatedOompas;
+            state.oompaloompas = filterDuplicates(state.oompaloompas, action.payload.oompaloompas);
             state.total = action.payload.total;
         },
         setOompaLoompasDetail: (state, action) => {
@@ -51,13 +45,7 @@ export const oompaLoompasSlice = createSlice({
                 ...action.payload.oompaloompas,
             };
 
-            const newDetails = [newDetail].filter((newDetail) => {
-                return !state.oompaDetail.some(existingDetail => existingDetail.id === newDetail.id);
-            });
-
-            const updatedDetails = [...state.oompaDetail, ...newDetails];
-
-            state.oompaDetail = updatedDetails;
+            state.oompaDetail = filterDuplicates(state.oompaDetail, [newDetail]);          
         },
         filterOompaLoompas: (state, action) => {
             state.oompaloompas = action.payload;
