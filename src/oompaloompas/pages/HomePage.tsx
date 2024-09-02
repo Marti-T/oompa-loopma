@@ -1,47 +1,87 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index';
 import { getOompaloompasList } from "../../store/slices/oompaloopas";
 import { checkDateExpired } from '../../helpers/checkDateExpired';
 import { OompaLoompaCard, Search } from '../components';
+import { Result } from '../../interfaces/oompaLoompas';
 
 
 export const HomePage = () => {
 
     const dispatch = useDispatch<AppDispatch>();
-    const { isLoading, oompaloompas = [], page, hasMoreData, error } = useSelector((state: RootState) => state.oompaloompas); 
-    const currentPage = localStorage.getItem('oompaLoompasPage');
+    const { isLoading, oompaloompas, page, total, error } = useSelector((state: RootState) => state.oompaloompas); 
+    const [hasMoreData, setHasMoreData] = useState(true);
 
-    const handleMoreOompaLoompas = useCallback(() => {
-        const nextPage = page + 1;
-        localStorage.setItem('oompaLoompasPage', JSON.stringify(nextPage));
-        dispatch(getOompaloompasList(nextPage));
-    }, [dispatch, page]);
-
+    
+    // TODO: Mirar dependencias 
+    useEffect(() => {
+        const storedOompaLoompas = JSON.parse(localStorage.getItem('oompaLoompasList') || '[]');
+        const storedPage = JSON.parse(localStorage.getItem('oompaLoompasPage') || '0');
+        const storedTotal = JSON.parse(localStorage.getItem('oompaLoompasTotalPages') || '0');
+    
+        const hasExpired = checkDateExpired('oompaLoompasList');
+    
+        if (hasExpired || storedOompaLoompas.length === 0) {
+            dispatch(getOompaloompasList(0)).then(() => {
+                localStorage.setItem('oompaLoompasListTimestamp', JSON.stringify(Date.now()));
+            });
+        } else {
+            dispatch({
+                type: 'oompaloompas/setOompaLoompasList',
+                payload: {
+                    oompaloompas: storedOompaLoompas,
+                    page: storedPage,
+                    total: storedTotal
+                }
+            });
+        }
+    }, [dispatch]);
 
     useEffect(() => {
-        const hasExpired = checkDateExpired('oompaLoompasListTimestamp');
-        if (hasExpired || oompaloompas.length === 0) {
-            dispatch(getOompaloompasList(Number(currentPage)));
+        if (oompaloompas.length > 0) {
+            // TODO: Optimizar 
+            const existingOompaLoompas = JSON.parse(localStorage.getItem('oompaLoompasList') || '[]');
+            const updatedOompaLoompas = [
+                ...existingOompaLoompas,
+                ...oompaloompas.filter(oompa => !existingOompaLoompas.some((existing: Result) => existing.id === oompa.id))
+            ];
+
+            localStorage.setItem('oompaLoompasList', JSON.stringify(updatedOompaLoompas));
+            localStorage.setItem('oompaLoompasPage', JSON.stringify(page));
+            localStorage.setItem('oompaLoompasTotalPages', JSON.stringify(total));
         }
-    }, []);
+    }, [oompaloompas, page, total]);
+
+
+    const handleMoreOompaLoompas = useCallback(() => {
+        if (page >= total) {
+            setHasMoreData(false);
+        } else {
+            dispatch(getOompaloompasList(page));
+        }
+    }, [dispatch, page, total]);
     
 
     useEffect(() => {
-        const handleScroll = () => {
-            if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 100 && !isLoading) {
-                handleMoreOompaLoompas();
-            }
-        };
+        if(page <= total) {
+            const handleScroll = () => {
 
-        window.addEventListener('scroll', handleScroll);
-        return () => window.removeEventListener('scroll', handleScroll);
-    }, [handleMoreOompaLoompas, isLoading, hasMoreData]);
+                if (window.innerHeight + window.scrollY >= document.documentElement.scrollHeight && !isLoading) {
+                    handleMoreOompaLoompas();
+                }
+            };
+
+            window.addEventListener('scroll', handleScroll);
+            return () => window.removeEventListener('scroll', handleScroll);
+        }
+    }, [handleMoreOompaLoompas, isLoading, total, page]);
     
 
     return (
         <>
             <Search />
+
 
             <div className="home-page">
                 <div className="container">

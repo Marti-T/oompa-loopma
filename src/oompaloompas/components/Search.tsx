@@ -1,22 +1,37 @@
-import { ChangeEvent, useState } from 'react';
+import { ChangeEvent, useEffect, useState } from 'react';
 import { filterOompaLoompas } from '../../store/slices/oompaloopas';
 import { useDispatch } from 'react-redux';
+import { Result } from '../../interfaces/oompaLoompas';
 
 
 export const Search = () => {
 
-    const [ searchTerm, setSearchTerm ] = useState('');
+    const [searchTerm, setSearchTerm] = useState('');
     const dispatch = useDispatch();
+    const [localStoreOompasList, setLocalStoreOompasList] = useState<Result[]>([]);
+
+    useEffect(() => {
+        const storedOompasList = JSON.parse(localStorage.getItem('oompaLoompasList') || '[]');
+        setLocalStoreOompasList(storedOompasList);
+    }, []);
 
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = event.target.value;
+        const value = event.target.value.toLowerCase();
         setSearchTerm(value);
-        dispatch(filterOompaLoompas(value));
+
+        if (localStoreOompasList.length > 0) {
+            const filteredOompas = localStoreOompasList.filter((oompa: Result) =>
+                oompa.first_name.toLowerCase().includes(value) ||
+                oompa.last_name.toLowerCase().includes(value) ||
+                oompa.profession.toLowerCase().includes(value)
+            );
+            dispatch(filterOompaLoompas(filteredOompas));
+        }
     };
 
     const handleClear = () => {
         setSearchTerm('');
-        dispatch(filterOompaLoompas(''));
+        dispatch(filterOompaLoompas(localStoreOompasList));
     };
 
     return (
