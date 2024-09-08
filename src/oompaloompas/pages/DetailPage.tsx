@@ -5,6 +5,7 @@ import { getOompaloompasDetail } from "../../store/slices/oompaloopas";
 import { AppDispatch, RootState } from '../../store/index';
 import { Detail, Gender } from '../../interfaces/oompaLoompas';
 import { checkDateExpired } from '../../helpers/checkDateExpired';
+import { storeOompaLoompaDetail } from '../../hooks/storeOompaLoompaDetail';
 
 
 export const DetailPage = () => {
@@ -38,20 +39,13 @@ export const DetailPage = () => {
 
     useEffect(() => {
         if (oompaDetail.length > 0) {
-            const foundDetail = oompaDetail.find((oompa) => oompa.id === id);
+            const foundDetail = oompaDetail.find((oompa) => oompa.id === id) ?? null; 
 
             if (foundDetail && !detail) {
                 setDetail(foundDetail);
             }
 
-            // TODO: Separar lógica de almacenamiento
-            const storedOompaDetails = JSON.parse(localStorage.getItem('oompaLoompasDetail') || '[]');
-            const isOompaStored = storedOompaDetails.some((oompa: Detail) => oompa.id === id);
-
-            if (!isOompaStored && foundDetail) {
-                const updatedOompaDetails = [...storedOompaDetails, foundDetail];
-                localStorage.setItem('oompaLoompasDetail', JSON.stringify(updatedOompaDetails));
-            }
+            storeOompaLoompaDetail(foundDetail, id);
         }
     }, [oompaDetail, id, detail]);
     

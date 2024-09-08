@@ -8,14 +8,14 @@ import { useOompaLoompasLoader } from '../../hooks/useOompaLoompasLoader';
 
 export const HomePage = () => {
 
+    const [hasMoreData, setHasMoreData] = useState(true);
     const dispatch = useDispatch<AppDispatch>();
     const { isLoading, oompaloompas, page, total, error } = useSelector((state: RootState) => state.oompaloompas); 
-    const [hasMoreData, setHasMoreData] = useState(true);
 
 
     useOompaLoompasLoader();
 
-    
+
     useEffect(() => {
         if (oompaloompas.length > 0) {
             localStorage.setItem('oompaLoompasList', JSON.stringify(oompaloompas));
