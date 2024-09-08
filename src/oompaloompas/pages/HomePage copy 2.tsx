@@ -2,8 +2,8 @@ import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppDispatch, RootState } from '../../store/index';
 import { getOompaloompasList } from "../../store/slices/oompaloopas";
-import { checkDateExpired } from '../../helpers/checkDateExpired';
 import { OompaLoompaCard, Search } from '../components';
+import { useOompaLoompasLoader } from '../../hooks/useOompaLoompasLoader';
 
 
 export const HomePage = () => {
@@ -13,7 +13,7 @@ export const HomePage = () => {
     const [hasMoreData, setHasMoreData] = useState(true);
 
 
-    useEffect(() => {
+    /* useEffect(() => {
         const storedOompaLoompas = JSON.parse(localStorage.getItem('oompaLoompasList') || '[]');
         const storedPage = JSON.parse(localStorage.getItem('oompaLoompasPage') || '0');
         const storedTotal = JSON.parse(localStorage.getItem('oompaLoompasTotalPages') || '0');
@@ -34,8 +34,9 @@ export const HomePage = () => {
                 }
             });
         }
-    }, [dispatch]);
+    }, [dispatch]); */
 
+    useOompaLoompasLoader();
 
     useEffect(() => {
         if (oompaloompas.length > 0) {

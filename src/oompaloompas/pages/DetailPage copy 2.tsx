@@ -16,6 +16,7 @@ export const DetailPage = () => {
     const [detail, setDetail] = useState<Detail | null>(null);
     const dispatch = useDispatch<AppDispatch>();
     const { isLoading, oompaDetail, error } = useSelector((state: RootState) => state.oompaloompas);
+    
 
     useEffect(() => {
         const isExpired = checkDateExpired('oompaLoompasList'); 
@@ -44,7 +45,6 @@ export const DetailPage = () => {
                 setDetail(foundDetail);
             }
 
-            // TODO: Separar lógica de almacenamiento
             const storedOompaDetails = JSON.parse(localStorage.getItem('oompaLoompasDetail') || '[]');
             const isOompaStored = storedOompaDetails.some((oompa: Detail) => oompa.id === id);
 

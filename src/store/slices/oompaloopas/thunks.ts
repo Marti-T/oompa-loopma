@@ -10,12 +10,12 @@ export const getOompaloompasList = ( page: number ) => {
         dispatch(startLoadingOompaloompas());
         
         try {
-            const { data } = await oompaLoompasApi.get<Welcome>(`?page=${page + 1}`);
+            const { data } = await oompaLoompasApi.get<Welcome>(`?page=${page}`);
 
             if (data.results.length === 0) {
                 dispatch(setOompaLoompasList({ oompaloompas: [], page: data.current, total: data.total }));
             } else {
-                dispatch(setOompaLoompasList({ oompaloompas: data.results, page: page + 1, total: data.total }));
+                dispatch(setOompaLoompasList({ oompaloompas: data.results, page: page, total: data.total }));
             }
 
         } catch (error) {

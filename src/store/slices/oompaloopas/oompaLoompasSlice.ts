@@ -14,7 +14,7 @@ interface OompaLoompasState {
 }
 
 const initialState: OompaLoompasState = {
-    page:  0,
+    page:  1,
     total: 0,
     oompaloompas: [],
     isLoading: false,

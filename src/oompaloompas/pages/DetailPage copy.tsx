@@ -17,20 +17,27 @@ export const DetailPage = () => {
     const dispatch = useDispatch<AppDispatch>();
     const { isLoading, oompaDetail, error } = useSelector((state: RootState) => state.oompaloompas);
 
-    useEffect(() => {
-        const isExpired = checkDateExpired('oompaLoompasList'); 
 
-        if (isExpired || isNaN(id)) {
+    useEffect(() => {
+        if (isNaN(id)) {
             navigate('/');
             return;
+        }
+
+        const isExpired = checkDateExpired('oompaLoompasList'); 
+
+        if (isExpired) {
+            // Si ha expirado, volvemos a pedir los detalles desde Redux
+            dispatch(getOompaloompasDetail(id));
         } else {
+            // Si no ha expirado, buscamos los detalles en localStorage
             const storedOompaDetails = JSON.parse(localStorage.getItem('oompaLoompasDetail') || '[]');
             const foundStoredDetail = storedOompaDetails.find((oompa: Detail) => oompa.id === id);
 
             if (foundStoredDetail) {
-                setDetail(foundStoredDetail);
+                setDetail(foundStoredDetail); // Si está en localStorage, lo usamos
             } else {
-                dispatch(getOompaloompasDetail(id));
+                dispatch(getOompaloompasDetail(id)); // Si no está en localStorage, pedimos los detalles
             }
         }
     }, [dispatch, id, navigate]); 
@@ -39,18 +46,18 @@ export const DetailPage = () => {
     useEffect(() => {
         if (oompaDetail.length > 0) {
             const foundDetail = oompaDetail.find((oompa) => oompa.id === id);
-
+            
             if (foundDetail && !detail) {
                 setDetail(foundDetail);
             }
 
-            // TODO: Separar lógica de almacenamiento
             const storedOompaDetails = JSON.parse(localStorage.getItem('oompaLoompasDetail') || '[]');
             const isOompaStored = storedOompaDetails.some((oompa: Detail) => oompa.id === id);
 
             if (!isOompaStored && foundDetail) {
                 const updatedOompaDetails = [...storedOompaDetails, foundDetail];
                 localStorage.setItem('oompaLoompasDetail', JSON.stringify(updatedOompaDetails));
+                localStorage.setItem('oompaLoompasListTimestamp', JSON.stringify(Date.now()));
             }
         }
     }, [oompaDetail, id, detail]);

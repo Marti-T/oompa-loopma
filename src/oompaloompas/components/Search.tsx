@@ -7,8 +7,8 @@ import { Result } from '../../interfaces/oompaLoompas';
 export const Search = () => {
 
     const [searchTerm, setSearchTerm] = useState('');
-    const dispatch = useDispatch();
     const [localStoreOompasList, setLocalStoreOompasList] = useState<Result[]>([]);
+    const dispatch = useDispatch();
 
     useEffect(() => {
         const storedOompasList = JSON.parse(localStorage.getItem('oompaLoompasList') || '[]');
