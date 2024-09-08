@@ -1,9 +1,11 @@
 import { useCallback, useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { AppDispatch, RootState } from '../../store/index';
-import { getOompaloompasList } from "../../store/slices/oompaloopas";
-import { OompaLoompaCard, Search } from '../components';
-import { useOompaLoompasLoader } from '../../hooks/useOompaLoompasLoader';
+import { AppDispatch, RootState } from '../../../store/index';
+import { getOompaloompasList } from "../../../store/slices/oompaloopas";
+import { OompaLoompaCard, Search } from '../../components';
+import { useOompaLoompasLoader } from '../../../hooks/useOompaLoompasLoader';
+
+import './home-page.scss';
 
 
 export const HomePage = () => {

@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import oompaLumpaLogo from '../assets/logo-oompa-loompas.png'
+import oompaLumpaLogo from '../../assets/logo-oompa-loompas.png';
+
+import './navbar.scss';
 
 
 export const Navbar = () => {

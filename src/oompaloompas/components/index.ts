@@ -1,2 +1,2 @@
-export * from './Search';
-export * from './OompaLoompaCard';
+export * from './search/Search';
+export * from './oompaloompacard/OompaLoompaCard';

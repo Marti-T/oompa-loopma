@@ -1,5 +1,7 @@
 import { Link } from 'react-router-dom';
-import { Result, Gender } from '../../interfaces/oompaLoompas';
+import { Result, Gender } from '../../../interfaces/oompaLoompas';
+
+import './oompa-loompa-card.scss';
 
 
 export const OompaLoompaCard = ({ id, image, first_name, last_name, gender, profession }: Result) => {

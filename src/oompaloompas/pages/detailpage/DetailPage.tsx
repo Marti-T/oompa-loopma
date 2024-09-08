@@ -1,11 +1,14 @@
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useNavigate, useParams } from 'react-router-dom';
-import { getOompaloompasDetail } from "../../store/slices/oompaloopas";
-import { AppDispatch, RootState } from '../../store/index';
-import { Detail, Gender } from '../../interfaces/oompaLoompas';
-import { checkDateExpired } from '../../helpers/checkDateExpired';
-import { storeOompaLoompaDetail } from '../../hooks/storeOompaLoompaDetail';
+import { getOompaloompasDetail } from "../../../store/slices/oompaloopas";
+import { AppDispatch, RootState } from '../../../store/index';
+import { Detail, Gender } from '../../../interfaces/oompaLoompas';
+import { checkDateExpired } from '../../../helpers/checkDateExpired';
+import { storeOompaLoompaDetail } from '../../../helpers/storeOompaLoompaDetail';
+
+import './oompa-loompa-detail.scss';
+
 
 
 export const DetailPage = () => {
@@ -39,6 +42,7 @@ export const DetailPage = () => {
 
     useEffect(() => {
         if (oompaDetail.length > 0) {
+
             const foundDetail = oompaDetail.find((oompa) => oompa.id === id) ?? null; 
 
             if (foundDetail && !detail) {

@@ -1,2 +1,2 @@
-export * from './HomePage';
-export * from './DetailPage';
+export * from './homepage/HomePage';
+export * from './detailpage/DetailPage';

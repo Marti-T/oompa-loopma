@@ -1,7 +1,9 @@
 import { ChangeEvent, useEffect, useState } from 'react';
-import { filterOompaLoompas } from '../../store/slices/oompaloopas';
+import { filterOompaLoompas } from '../../../store/slices/oompaloopas';
 import { useDispatch } from 'react-redux';
-import { Result } from '../../interfaces/oompaLoompas';
+import { Result } from '../../../interfaces/oompaLoompas';
+
+import './search.scss';
 
 
 export const Search = () => {
