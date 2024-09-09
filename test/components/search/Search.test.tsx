@@ -1,15 +1,17 @@
 import { render, screen, fireEvent } from '@testing-library/react';
-import { Search } from '../../src/oompaloompas/components/Search';
 import { useDispatch } from 'react-redux';
-import { filterOompaLoompas } from '../../src/store/slices/oompaloopas/oompaLoompasSlice';
-import { Gender, Result } from '../../src/interfaces/oompaLoompas';
+import { filterOompaLoompas } from '../../../src/store/slices/oompaloopas/oompaLoompasSlice';
+import { Search } from '../../../src/oompaloompas/components/search/Search';
+import { Gender, Result } from '../../../src/interfaces/oompaLoompas';
+
+
 
 // Mock de useDispatch
 jest.mock('react-redux', () => ({
     useDispatch: jest.fn(),
   }));
   
-  jest.mock('../../src/store/slices/oompaloopas/oompaLoompasSlice', () => ({
+  jest.mock('../../../src/store/slices/oompaloopas/oompaLoompasSlice', () => ({
     filterOompaLoompas: jest.fn(),
   }));
   

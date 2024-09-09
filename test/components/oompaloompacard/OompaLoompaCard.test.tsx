@@ -1,9 +1,8 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
 
-import { OompaLoompaCard } from '../../src/oompaloompas/components/OompaLoompaCard';
-import { Gender, Result } from '../../src/interfaces/oompaLoompas';
-
+import { OompaLoompaCard } from '../../../src/oompaloompas/components/oompaloompacard/OompaLoompaCard';
+import { Gender, Result } from '../../../src/interfaces/oompaLoompas';
 
 describe('Component OompaLoompaCard', () => {
     const mockOompaLoompa: Result = {

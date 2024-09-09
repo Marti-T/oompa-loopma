@@ -1,13 +1,13 @@
 import { render, screen } from '@testing-library/react';
 import { MemoryRouter } from 'react-router-dom';
-import { AppRouter } from '../../src/router/AppRouter'; // Ajusta la ruta según sea necesario
-import { HomePage } from '../../src/oompaloompas/pages/HomePage';
-import { DetailPage } from '../../src/oompaloompas/pages/DetailPage';
-import { Navbar } from '../../src/ui/Navbar';
+import { AppRouter } from '../../src/router/AppRouter';
 
-jest.mock('../../src/oompaloompas/pages/HomePage');
-jest.mock('../../src/oompaloompas/pages/DetailPage');
-jest.mock('../../src/ui/Navbar');
+import { DetailPage, HomePage } from '../../src/oompaloompas/pages';
+import { Navbar } from '../../src/ui';
+
+jest.mock('../../src/oompaloompas/pages/homepage/HomePage');
+jest.mock('../../src/oompaloompas/pages/detailpage/DetailPage');
+jest.mock('../../src/ui/navbar/Navbar');
 
 describe('AppRouter Component', () => {
     beforeEach(() => {
@@ -23,10 +23,8 @@ describe('AppRouter Component', () => {
         </MemoryRouter>
       );
   
-      // Verifica que el Navbar se renderiza
       expect(screen.getByText('Navbar Mock')).not.toBeNull();
   
-      // Verifica que HomePage se renderiza en la ruta "/"
       expect(screen.getByText('HomePage Mock')).not.toBeNull();
     });
   
